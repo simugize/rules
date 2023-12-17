@@ -84,8 +84,23 @@ class Condition:
         return result
 
     def execute_condition(self, context):
-        return True
+        key_value = context[self.key]
+        target_value = self.value
+        if self.operator == "=":
+            return key_value == target_value 
     
+        if self.operator == "<":
+            return key_value < target_value
+        
+        if self.operator == ">":
+            return key_value > target_value   
+
+        if self.operator == ">=":
+            return key_value >= target_value   
+        
+        if self.operator == "<=":
+            return key_value <= target_value           
+
 class Action:
     def __init__(self, name=None, action_label=None):
         self.name = name
