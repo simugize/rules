@@ -3,12 +3,16 @@ from yaml_rules import rules
 
 class TestRules(unittest.TestCase):
 
-    def test_my_rule_function(self):
-        # Call the function you want to test
-        result = rules.my_rule_function()
-
-        # Assert expected results
-        self.assertEqual(result, "Expected Result")
+    def test_simple_rule(self):
+        context = {
+            "price":3
+        }
+        engine = rules.load_from_file("./samples/simple-rule.yaml")
+        #engine.execute(context)
+        # Assert the action fired once
+        self.assertEquals("Simple Rule", engine.name)
+        #self.assertTrue("test_print" in context.action_log)
+        #self.assertTrue(len(context.action_log["test_print"]) == 1)
 
 if __name__ == '__main__':
     unittest.main()
