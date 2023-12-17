@@ -11,14 +11,14 @@ rule:
             operator: "<"
             value: 10
         - condition3:
-            key: "$recentPositiveNews"
+            key: "recentPositiveNews"
             value: true
         - condition4:
             key: "outstandingShares"
             operator: "between"
             value: "10000000,100000000"
         - condition5:
-            key: "$dailyVolume"
+            key: "dailyVolume"
             operator: ">"
             value: "$30DayAverageVolume"
             value_transform: "$30DayAverageVolume * 5"
