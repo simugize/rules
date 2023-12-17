@@ -1,0 +1,9 @@
+rule:
+  name: "Simple Handler"
+  conditions:
+    and:
+      - condition1:
+          key: "price"
+          value: 2
+  actions:
+    - action1: "hello_world"

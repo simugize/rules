@@ -1,6 +1,8 @@
 import logging 
 import yaml
 import re
+import string
+import random
 
 class Engine:
     def __init__(self, name):
@@ -29,6 +31,15 @@ class Engine:
         # Execute actions if true
         for akey, avalue in self.actions.items():
             avalue.execute(context)
+
+    def add_action_handler(self, action_func):
+        action_key = random_string(10)
+        self.actions[action_key] = create_action_handler(action_key, action_key, action_func)
+
+# End Engine class
+
+def random_string(length=10):
+    return ''.join(random.choice(string.ascii_letters) for _ in range(length))
 
 def load_from_file(file_path):
     try:
@@ -61,8 +72,8 @@ def add_actions_list(engine, action_list):
         for akey, avalue in action.items():
             engine.actions[akey] = create_action_handler(akey, avalue)
 
-def create_action_handler(akey, action_key):
-    return Action(name=akey, action_label=action_key)
+def create_action_handler(akey, action_key=None, action_func=None):
+    return Action(name=akey, action_label=action_key, action_func=action_func)
 
 def build_rules(engine, conditions_dict):
     for key, condition_dict in conditions_dict.items():
@@ -133,11 +144,16 @@ class Condition:
                
 
 class Action:
-    def __init__(self, name=None, action_label=None):
+    def __init__(self, name=None, action_label=None, action_func=None):
         self.name = name
         self.action_label = action_label
+        self.action_func = action_func
 
     def execute(self, context):
-        logging.info(f"Action executing for {self.action_label}")
-        # Log it 
-        context["action_log"][self.name] = f"Action executing for {self.name} - {self.action_label}"
+        # If you have a custom handler, execute it
+        if self.action_func:
+            self.action_func(context)
+        else: 
+            logging.info(f"Action executing for {self.action_label}")
+            # Log it 
+            context["action_log"][self.name] = f"Action executing for {self.name} - {self.action_label}"
