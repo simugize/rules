@@ -1,5 +1,6 @@
 import logging 
 import yaml
+import re
 
 class Engine:
     def __init__(self, name):
@@ -73,14 +74,23 @@ def create_condition_handler(condition_name, condition_dict):
     if "operator" in condition_dict:
         operator = condition_dict["operator"]
 
-    return Condition(name=condition_name, key=condition_dict["key"], operator=operator, value=condition_dict["value"])
+    value_transform = None
+    if "value_transform" in condition_dict:
+        value_transform = condition_dict["value_transform"]
+
+    return Condition(name=condition_name, key=condition_dict["key"], operator=operator, value=condition_dict["value"], value_transform=value_transform)
+
+def replace_variable(match, context):
+    variable_name = match.group(1)
+    return str(context.get(variable_name, match.group(0)))
 
 class Condition:
-    def __init__(self, name=None, key=None, operator=None, value=None):
+    def __init__(self, name=None, key=None, operator=None, value=None,value_transform=None):
         self.name = name
         self.key = key
         self.operator = operator
         self.value = value
+        self.value_transform = value_transform
 
     def evaluate(self, context):
         result = self.execute_condition(context)
@@ -94,6 +104,13 @@ class Condition:
         # If target is a reference field, grab the value
         if isinstance(target_value, str) and target_value.startswith("$"):
             target_value = context[target_value[1:]]
+
+        # Do I need to transform the value?
+        if isinstance(self.value_transform, str):
+            pattern = r'\$(\w+)'
+            value_transform = re.sub(pattern, lambda match: replace_variable(match, context), self.value_transform)            
+            target_value = eval(value_transform)
+
 
         if self.operator == "=":
             return key_value == target_value 

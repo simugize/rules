@@ -1,0 +1,10 @@
+rule:
+  name: "Simple Rule4"
+  conditions:
+    and:
+      - condition1:
+          key: "high_price"
+          value: "$low_price"
+          value_transform: "$low_price * 10"
+  actions:
+    - action1: "test_print"

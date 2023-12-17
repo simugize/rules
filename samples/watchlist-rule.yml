@@ -21,6 +21,6 @@ rule:
             key: "$dailyVolume"
             operator: ">"
             value: "$30DayAverageVolume"
-            compare_to: "5 x "
+            value_transform: "$30DayAverageVolume * 5"
   actions:
     - action1: "AddToWatchlist"
