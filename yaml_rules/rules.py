@@ -69,7 +69,11 @@ def build_rules(engine, conditions_dict):
         break
 
 def create_condition_handler(condition_name, condition_dict):
-    return Condition(name=condition_name, key=condition_dict["key"], operator=condition_dict["operator"], value=condition_dict["value"])
+    operator = "="
+    if "operator" in condition_dict:
+        operator = condition_dict["operator"]
+
+    return Condition(name=condition_name, key=condition_dict["key"], operator=operator, value=condition_dict["value"])
 
 class Condition:
     def __init__(self, name=None, key=None, operator=None, value=None):
@@ -99,7 +103,12 @@ class Condition:
             return key_value >= target_value   
         
         if self.operator == "<=":
-            return key_value <= target_value           
+            return key_value <= target_value   
+
+        if self.operator == "between":
+            values = target_value.split(",")
+            return float(key_value) > float(values[0]) and float(key_value) < float(values[1])   
+               
 
 class Action:
     def __init__(self, name=None, action_label=None):

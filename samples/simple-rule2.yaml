@@ -1,0 +1,10 @@
+rule:
+  name: "Simple Rule2"
+  conditions:
+    and:
+      - condition1:
+          key: "price"
+          operator: "between"
+          value: "1,10"
+  actions:
+    - action1: "test_print"

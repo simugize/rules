@@ -16,9 +16,7 @@ rule:
         - condition4:
             key: "outstandingShares"
             operator: "between"
-            range:
-              min: 10M
-              max: 100M
+            value: "10000000,100000000"
         - condition5:
             key: "$dailyVolume"
             operator: ">"
