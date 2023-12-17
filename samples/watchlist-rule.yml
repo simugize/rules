@@ -1,0 +1,27 @@
+rule:
+  name: "Financial Analysis Rule"
+  conditions:
+    - and:
+        - condition1:
+            key: "price"
+            operator: ">="
+            value: 2
+        - condition2:
+            key: "price"
+            operator: "<"
+            value: 10
+        - condition3:
+            key: "$recentPositiveNews"
+            value: true
+        - condition4:
+            key: "outstandingShares"
+            operator: "between"
+            range:
+              min: 10M
+              max: 100M
+        - condition5:
+            key: "$dailyVolume"
+            operator: ">"
+            compare_to: "5 x $30DayAverageVolume"
+  actions:
+    - action1: "AddToWatchlist"
