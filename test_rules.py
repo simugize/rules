@@ -1,5 +1,6 @@
 import unittest
 from yaml_rules import rules
+import logging
 
 class TestRules(unittest.TestCase):
 
@@ -8,11 +9,19 @@ class TestRules(unittest.TestCase):
             "price":3
         }
         engine = rules.load_from_file("./samples/simple-rule.yaml")
-        #engine.execute(context)
-        # Assert the action fired once
-        self.assertEquals("Simple Rule", engine.name)
-        #self.assertTrue("test_print" in context.action_log)
-        #self.assertTrue(len(context.action_log["test_print"]) == 1)
+        engine.execute(context)
+        
+        # Assert name is set
+        self.assertEqual("Simple Rule", engine.name)
+
+        # Assert condition has been set
+        self.assertIsNotNone(engine.conditions["condition1"])
+                
+        # Assert result of condition1
+        self.assertTrue(context["condition_log"]["condition1"])
+
+        # Assert action is called 
+        self.assertTrue("action1" in context["action_log"])
 
 if __name__ == '__main__':
     unittest.main()

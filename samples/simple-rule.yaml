@@ -1,10 +1,10 @@
 rule:
   name: "Simple Rule"
   conditions:
-    - and:
-        - condition1:
-            key: "price"
-            operator: ">="
-            value: 2
+    and:
+      - condition1:
+          key: "price"
+          operator: ">="
+          value: 2
   actions:
     - action1: "test_print"
