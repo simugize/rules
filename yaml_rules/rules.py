@@ -90,6 +90,11 @@ class Condition:
     def execute_condition(self, context):
         key_value = context[self.key]
         target_value = self.value
+
+        # If target is a reference field, grab the value
+        if isinstance(target_value, str) and target_value.startswith("$"):
+            target_value = context[target_value[1:]]
+
         if self.operator == "=":
             return key_value == target_value 
     

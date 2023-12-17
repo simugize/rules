@@ -20,6 +20,7 @@ rule:
         - condition5:
             key: "$dailyVolume"
             operator: ">"
-            compare_to: "5 x $30DayAverageVolume"
+            value: "$30DayAverageVolume"
+            compare_to: "5 x "
   actions:
     - action1: "AddToWatchlist"
