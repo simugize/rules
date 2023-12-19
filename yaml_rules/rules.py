@@ -146,7 +146,7 @@ class Condition:
 
         if self.operator == "between":
             values = target_value.split(",")
-            return float(key_value) > float(values[0]) and float(key_value) < float(values[1])   
+            return float(key_value) >= float(values[0]) and float(key_value) < float(values[1])   
                
 
 class Action:

@@ -23,5 +23,19 @@ class TestWatchlist(unittest.TestCase):
         
         self.assertTrue(self.action_fired, "Watchlist rule was not executed.")
 
+    def test_simple_rule2(self):
+        context = {
+            "price":2,
+            "recentPositiveNews": True,
+            "outstandingShares": 10000000,
+            "dailyVolume": 100,
+            "30DayAverageVolume": 10
+        }
+        engine = rules.load_from_file("./samples/watchlist-rule2.yaml")
+        engine.execute(context)
+        
+        self.assertTrue(len(engine.conditions) > 0)
+
+
 if __name__ == '__main__':
     unittest.main()
