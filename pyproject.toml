@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rules"
+version = "0.1.0"
+description = "A Python package for processing and applying rules."
+authors = [
+    { name = "Your Name", email = "youremail@example.com" },
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://example.com/rules"
+Documentation = "https://example.com/rules/docs"
+Source = "https://github.com/yourusername/rules"
+Tracker = "https://github.com/yourusername/rules/issues"
+
+[tool.setuptools]
+packages = find:
