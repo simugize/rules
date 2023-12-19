@@ -8,6 +8,7 @@ class TestWatchlist(unittest.TestCase):
 
     def toggle_status(self, context):
         self.action_fired = True
+        self.assertTrue(context["price"] == 2)
 
     def test_simple_rule(self):
         context = {
@@ -18,7 +19,7 @@ class TestWatchlist(unittest.TestCase):
             "30DayAverageVolume": 10
         }
         engine = rules.load_from_file("./samples/watchlist-rule.yaml")
-        engine.add_action_handler(lambda c2: self.toggle_status(context))
+        engine.add_action_handler(self.toggle_status)
         engine.execute(context)
         
         self.assertTrue(self.action_fired, "Watchlist rule was not executed.")
