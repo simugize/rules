@@ -43,11 +43,15 @@ def random_string(length=10):
 
 def load_from_file(file_path):
     try:
-        with open(file_path, 'r') as file:
-            rules_data = yaml.safe_load(file)
+        with open(file_path, 'r') as file_contents:
+            return load_from_string(file_contents)
     except Exception as e:
         logging.error(f"Could not parse {file_path}: {e.args[0]}", e)
         raise Exception(f"Could not parse {file_path}: {e.args[0]}")
+
+
+def load_from_string(yaml_string):
+    rules_data = yaml.safe_load(yaml_string)
 
     engine = Engine(name=None)
 
